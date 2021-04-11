@@ -1,0 +1,41 @@
+.backgroundDiv{
+  z-index: -1;
+  width: 200px;
+  height: 1500px;
+  top:0px;
+  left:0px;
+  background-color: #800080;
+  position: absolute;
+}
+
+.sectionsDiv{
+  left:2px;
+  z-index:1;
+  position:absolute;
+}
+
+.projectDetailsDiv{
+
+  right:100px;
+  z-index: 2;
+  position: absolute;
+}
+
+.downloadDiv{
+  right:48px;
+}
+
+#menu{
+  font-size: 22px;
+  position: relative;
+  border:2px solid blue;
+  margin-left: 35px;
+}
+
+#projectDetails{
+  font-size: 20px;
+}
+
+h1{
+  margin-left:20px;
+}

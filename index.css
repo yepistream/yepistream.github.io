@@ -1,5 +1,5 @@
 h1{
-    margin-left: 57px;
+    margin-left: 20px;
     margin-bottom: 44px;
 }
 #SectionLinks{
@@ -7,4 +7,17 @@ h1{
     position: relative;
     border:2px solid blue;
     margin-left: 35px;
+}
+.backgroundDiv{
+  z-index: -1;
+  width: 200px;
+  height: 1500px;
+  top:0px;
+  left:0px;
+  background-color:grey;
+  position: absolute;
+}
+.menuDiv{
+  z-index: 1;
+  position: absolute;
 }
