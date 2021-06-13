@@ -1,40 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="windowStyle.css">
 </head>
 <body>
+  <audio autoplay>
+    <source src="Sound/StartUpSoundWin98.mp3" type="audio/mpeg">
+  </audio>
 
-  <div class="backgroundDiv">
+  <div class="dekstop"></div>
+  <div class="appIcon" style="top:40%; left: 40%" onclick="openSesame(0)"><img src="imgs/notepad_file-0.png" width="39px"><span style="bottom: -30%; left: -7%; position: absolute;">Welcome</span></div>
+  <div class="appIcon" style="top:50%; left: 50%" onclick="openSesame(1)"><img src="imgs/notepad_file-0.png" width="39px"><span style="bottom: -30%; left: 7%; position: absolute;">About</span></div>
+  <div class="appIcon" style="top:60%; left: 60%" onclick="openSesame(2)"><img src="imgs/notepad_file-0.png" width="39px"><span style="bottom: -30%; left: -7%; position: absolute;">Projects</span></div>
 
-  </div>
-  <h1>Personal Webisite with my random projects</h1>
-  <div class="menuDiv">
-    <a href="#welcomeID" id="SectionLinks">Home</a>
-    <a href="#projectID" id="SectionLinks">Projects</a>
-    <a href="#aboutID" id="SectionLinks">About</a>
-  </div>
-  <div class="infoTabDiv" style="top: 164px; left: 11%;"id="welcomeID">
-  	<font size = "8"><h>Hello and Welcome</h></font>
-  	<p>Hello you!</p>
-  	<p>You found my website in the shitpile we call the internet!</p>
-  	<p>Ain't that fantastic....</p>
-  	<p>Love u <3</p>
-  </div>
-  <div class="infoTabDiv" style="top: 49%; left: 24%;" id="projectID">
-  	<font size = "8"><h>My Projects... YEY!</h></font>
-  	<p>Just a small list of my current projects</p>
-  	<p><a href="\Projects\OutOfThisDimension\otdDetails.html">Out Of This Dimension</a>- a game heavily influenced by the horror of half-life, that im making out of fun!</p>
-  	<p>More coming soon, i think.....</p>
-  </div>
-  <div class="infoTabDiv" style="top: 69%; left: 53%;"id="aboutID">
-  	<font size = "8"><h>About me!!!</h></font>
-  	<p>Oh so you want to know more about me... first take me to dinner...</p>
-  	<p>Jk, or maybe not... no but really <a href="About.html">click here for it</a></p>
-  	<p>Now stop being a creep <3</p>
-  </div>
-  <div class="aboutDiv">
-  	<h2>Made by me</h2>
-  </div>
+  <div class="window" id="homeThing" style="width:400px; height:200px; top: 20%; left: 20%;">
+    <div class = "toolbarWindow"> 
+      <span id="toolbarText"><img src="imgs/notepad-4.png" id="toolbarImage" width="19px">Notepad - Welcome</span>
+      <button id="toolbarCloseButton" onclick="closeTheDoorImPlayingMinecraft(0)"></button>
+      <button id="toolbarMaximizeButton"onclick="errorAlert()"></button>
+      <button id="toolbarMinimizeButton" onclick="closeTheDoorImPlayingMinecraft(0)"></button>
+    </div>
+    <div class="notepadForeground" id="notepadText">
+    <h> Hello and Welcome</h>
+  <p></p>
+    <span>Hello you!</span>
+  <p></p>
+    <span>You found my website in the shitpile we call the internet!</span>
+  <p></p>
+    <span>Ain't that fantastic....</span>
+
+    </div>
+  </div>  
+
+  <div class="window" id="aboutThing" style="width:400px; height:200px; top: 40%; left: 40%;">
+    <div class = "toolbarWindow"> 
+      <span id="toolbarText"><img src="imgs/notepad-4.png" id="toolbarImage" width="19px">Notepad - About</span>
+      <button id="toolbarCloseButton" onclick="closeTheDoorImPlayingMinecraft(1)"></button>
+      <button id="toolbarMaximizeButton" onclick="errorAlert()"></button>
+      <button id="toolbarMinimizeButton" onclick="closeTheDoorImPlayingMinecraft(1)"></button>
+    </div>
+    <div class="notepadForeground" id="notepadText">
+    <h></h>
+  <p></p>
+    <span>So there really isn't much about me.</span>
+  <p></p>
+    <span>I like hitting my head onto my keyboard until my computer dose stuff.</span>
+  <p></p>
+    <span>And I like to program programs that use vector-like graphics, not really a front-end dev, at all.</span>
+
+    </div>
+  </div>  
+
+  <div class="window" id="projectsThing" style="width:400px; height:250px; top: 60%; left: 60%;">
+    <div class = "toolbarWindow"> 
+      <span id="toolbarText"><img src="imgs/notepad-4.png" id="toolbarImage" width="19px">Notepad - Projects</span>
+      <button id="toolbarCloseButton" onclick="closeTheDoorImPlayingMinecraft(2)"></button>
+      <button id="toolbarMaximizeButton"onclick="errorAlert()"></button>
+      <button id="toolbarMinimizeButton" onclick="closeTheDoorImPlayingMinecraft(2)"></button>
+    </div>
+    <div class="notepadForeground" id="notepadText" style="height:90.5%">
+    <h> Most my projects I privated, because of a suprise that I got coming.</h>
+  <p></p>
+    <span>Out Of this Dimension - An indie game im working out of fun on.</span>
+  <p></p>
+    <span>Hotline Miami: Animalistic Views - A fan-game that Im working on, trying to make Hotline Miami into....</span>
+  <p></p>
+    <span>??? - A new ??? that I created, and that Im very proud of :)</span>
+
+    </div>
+  </div>  
+  
+
+
 </body>
+<script src="somethingAboutLogic.js"></script>
 </html>

@@ -1,0 +1,88 @@
+.window{
+  background-color: rgb(192,192,192);
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+  z-index:-2;
+  position:absolute;
+}
+
+.toolbarWindow{
+	background: linear-gradient(to right, rgb(0, 0, 128) 0%, rgb(16, 132, 208) 100%);
+  width:100%;
+  height:20px;
+}
+
+#toolbarCloseButton,
+#toolbarMaximizeButton,
+#toolbarMinimizeButton{
+  width:18px;
+  height:20px;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAAKCAYAAADo3z3CAAAAoUlEQVRIS9VVWw7AIAib9z/0FpZgCOFRgpluf9MClhYdV++7gfDhYLxYDw+UyiHd5F8S5lr6zNa6Xpv/KwhHOahQpLB1+CwfycgYrwmE0WK8MTsIR1aOGsR+NYkkYzN5/pGwVA9xA/diq8LeHCKuQxQ+aoYt2yJWtpSNZth0edRpGVC5eGQcSg4hXLml3fdpBeHs8evWyPKX9ruXVqnYCeAHA8IyC9K2kmkAAAAASUVORK5CYII=");
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+	-ms-interpolation-mode: nearest-neighbor;
+  image-rendering: -moz-crisp-edges;
+  padding: 0;
+  float:right;
+}
+
+.notepadForeground{
+  background-color:white; 
+  width: 99%;
+  height:88%;
+  top: 22px;
+  left: 0.4%;
+  /*border-style:solid;
+  border-color:rgb(192,192,192);
+  */
+  position:inherit;
+}
+
+.dekstop{
+  background-image : url("imgs/windowsXpImage.png");
+  z-index: 1;
+  top: 0px;
+  left:0px;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+}
+
+.appIcon{
+  z-index: 2;
+  color: white;
+  font-family: sans-serif;
+  font-size: 12px ;
+  position: absolute;
+}
+
+#toolbarText{
+  font-family: sans-serif;
+	font-family: "MS Sans Serif", "Segoe UI", sans-serif;
+  color: white;
+}
+#toolbarImage{
+  float: left;
+}
+
+#toolbarCloseButton{
+  background-position: -39px;   
+}
+#toolbarMaximizeButton{
+  background-position: -13px;
+}
+#toolbarMinimizeButton{
+  background-position-y: 4px;
+  background-position: 1px;
+}
+#notepadText{
+  font-family: sans-serif;
+}
+
+
+body{
+  background-image: url(imgs/windowsXpImage.png);
+  font-family: "MS Sans Serif", "Segoe UI", sans-serif;
+}
