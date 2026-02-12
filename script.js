@@ -50,6 +50,12 @@ if (a.FileType !== b.FileType) return a.FileType === "Directory" ? -1 : 1;
 return a.Name.localeCompare(b.Name);
 }
 
+function normalizeSubPath(pathValue = "") {
+const raw = String(pathValue || "").trim();
+if (!raw) return "";
+return raw.replace(/^\/+/, "").replace(/\/+$/, "");
+}
+
 function objectTreeToChildrenEntries(obj) {
 const entries = [];
 
@@ -282,19 +288,21 @@ if (/\.json(?:$|[?#])/i.test(trimmed)) {
 const githubSource = parseGitHubSource(trimmed);
 if (githubSource) {
     let lastError = null;
+    const forcedPath = normalizeSubPath(options.onlyPath);
+    const pathToLoad = forcedPath || normalizeSubPath(githubSource.path);
     for (const ref of githubSource.refs) {
     try {
         const rootName =
         options.rootName ||
-        (githubSource.path
-            ? decodeURIComponent(githubSource.path.split("/").filter(Boolean).pop())
+        (pathToLoad
+            ? decodeURIComponent(pathToLoad.split("/").filter(Boolean).pop())
             : `[ROOT] ${githubSource.owner}/${githubSource.repo}`);
 
         const root = await buildDirNodeFromGitHub(
         githubSource.owner,
         githubSource.repo,
         ref,
-        githubSource.path || "",
+        pathToLoad || "",
         rootName
         );
         root.opened = options.opened ?? true;
@@ -495,6 +503,7 @@ try {
     await loadSourceIntoDirTree("https://github.com/yepistream/yepistream.github.io", {
     baseUrl: window.location.href,
     rootName: "[ROOT] X:",  
+    onlyPath: "pages",
     opened: true
     });
 } catch (err) {
