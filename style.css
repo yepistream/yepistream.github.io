@@ -1,0 +1,30 @@
+body{
+    width: 100%;
+    height: 100%;
+}
+
+*
+{ 
+    margin: 0;
+    padding: 0;
+}
+
+#flex-main-container{
+    display: flex;
+}
+
+.flex-div-main{
+        
+
+}
+
+
+
+
+#flex-main-container:nth-last-child{
+    background-color :chocolate;
+}
+
+#flex-main-container:nth-child{
+    background-color: aqua;
+}
