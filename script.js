@@ -365,14 +365,14 @@ function WriteDirectory(dirNode, dirAmount = 0, elm = null) {
             switch (n.FileType) {
             case "Directory":
                 if (n.opened) {
-                    line += " \t[-]";
+                    line += " \t/ [-]";
                     makeLine(line, ()=> {
                         n.opened = false;
                         if(elm) elm.replaceChildren(WriteDirectory(testDir,0,elm))
                     });
                     container.appendChild(WriteDirectory(n, dirAmount + 1,elm));
                 } else {
-                    line += "... [+]";
+                    line += "/... [+]";
                     makeLine(line,()=>{
                         n.opened = true;
                         if(elm) elm.replaceChildren(WriteDirectory(testDir,0,elm))
@@ -416,7 +416,7 @@ let CurrentLoadedFileNode = null;
 assgum.style.whiteSpace = "pre";
 
 const defaultSource = {
-name: "[ROOT] X:",
+name: "[DEMO] X:",
 type: "directory",
 opened: true,
 children: [
@@ -529,7 +529,7 @@ textimate(CurrentFileNameHeader);
 try {
     await loadSourceIntoDirTree("https://github.com/yepistream/yepistream.github.io", {
     baseUrl: window.location.href,
-    rootName: "[ROOT] X:",  
+    rootName: "X:",  
     onlyPath: "pages",
     opened: true
     });
