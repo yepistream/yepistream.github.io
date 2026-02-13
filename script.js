@@ -56,6 +56,10 @@ if (!raw) return "";
 return raw.replace(/^\/+/, "").replace(/\/+$/, "");
 }
 
+function isHtmlFileName(name = "") {
+return /\.html?$/i.test(String(name || "").trim());
+}
+
 function objectTreeToChildrenEntries(obj) {
 const entries = [];
 
@@ -95,6 +99,7 @@ throw new Error("Invalid JSON manifest. Expected object or array.");
 function manifestEntryToDirNode(entry, baseUrl) {
 if (typeof entry === "string") {
     const filename = decodeURIComponent(entry.split("/").pop() || "file.html");
+    if (!isHtmlFileName(filename)) return null;
     return new DirNode(filename, "HTML", null, [], toAbsoluteUrl(entry, baseUrl), false);
 }
 
@@ -113,6 +118,7 @@ if (kind === "directory" || kind === "dir" || kind === "folder") {
 const fileName =
     entry.name ||
     (entry.url ? decodeURIComponent(String(entry.url).split("/").pop() || "file.html") : "file.html");
+if (!isHtmlFileName(fileName)) return null;
 const realUrl = toAbsoluteUrl(entry.realUrl || entry.url || entry.href || entry.path || fileName, baseUrl);
 return new DirNode(fileName, "HTML", null, [], realUrl, Boolean(entry.opened));
 }
@@ -179,23 +185,39 @@ if (!res.ok) {
 return res.json();
 }
 
+function buildGitHubPagesBaseUrl(owner, repo) {
+const isUserSiteRepo = repo.toLowerCase() === `${owner.toLowerCase()}.github.io`;
+if (isUserSiteRepo) return `https://${owner}.github.io/`;
+return `https://${owner}.github.io/${repo}/`;
+}
+
+function buildGitHubPagesFileUrl(owner, repo, repoPath) {
+const base = buildGitHubPagesBaseUrl(owner, repo);
+const safePath = String(repoPath || "")
+    .split("/")
+    .filter(Boolean)
+    .map(segment => encodeURIComponent(segment))
+    .join("/");
+return new URL(safePath, base).href;
+}
+
 async function buildDirNodeFromGitHub(owner, repo, ref, path = "", displayName = "[ROOT]") {
 const listing = await fetchGitHubContents(owner, repo, ref, path);
 
 if (!Array.isArray(listing)) {
-    if (listing.type === "file") {
-    const fileUrl = listing.download_url || `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${listing.path}`;
+    if (listing.type === "file" && isHtmlFileName(listing.name)) {
+    const fileUrl = buildGitHubPagesFileUrl(owner, repo, listing.path);
     return new DirNode(listing.name, "HTML", null, [], fileUrl, false);
     }
-    throw new Error(`Path "${path}" is not a directory.`);
+    throw new Error(`Path "${path}" is not a directory with .htm/.html files.`);
 }
 
 const children = [];
 for (const item of listing) {
     if (item.type === "dir") {
     children.push(await buildDirNodeFromGitHub(owner, repo, ref, item.path, item.name));
-    } else if (item.type === "file") {
-    const fileUrl = item.download_url || `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${item.path}`;
+    } else if (item.type === "file" && isHtmlFileName(item.name)) {
+    const fileUrl = buildGitHubPagesFileUrl(owner, repo, item.path);
     children.push(new DirNode(item.name, "HTML", null, [], fileUrl, false));
     }
 }
@@ -246,7 +268,7 @@ const walk = async (dirUrl, displayName) => {
     if (isDir) {
         const childDirUrl = new URL(`${childName}/`, key);
         childMap.set(mapKey, await walk(childDirUrl, childName));
-    } else {
+    } else if (isHtmlFileName(childName)) {
         childMap.set(mapKey, new DirNode(childName, "HTML", null, [], abs.href, false));
     }
     }
@@ -344,16 +366,16 @@ function WriteDirectory(dirNode, dirAmount = 0, elm = null) {
             case "Directory":
                 if (n.opened) {
                     line += " \t[-]";
-                    makeLine(line, ()=>{
-                    n.opened = false;
-                    if(elm) elm.replaceChildren(WriteDirectory(testDir,0,elm))
+                    makeLine(line, ()=> {
+                        n.opened = false;
+                        if(elm) elm.replaceChildren(WriteDirectory(testDir,0,elm))
                     });
-                    container.appendChild(WriteDirectory(n, dirAmount + 1));
+                    container.appendChild(WriteDirectory(n, dirAmount + 1,elm));
                 } else {
                     line += "... [+]";
                     makeLine(line,()=>{
-                    n.opened = true;
-                    if(elm) elm.replaceChildren(WriteDirectory(testDir,0,elm))
+                        n.opened = true;
+                        if(elm) elm.replaceChildren(WriteDirectory(testDir,0,elm))
                     });
                 }
                 break;
