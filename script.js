@@ -46,7 +46,7 @@ try {
 }
 
 function sortDirNodes(a, b) {
-if (a.FileType !== b.FileType) return a.FileType === "Directory" ? -1 : 1;
+if (a.FileType !== b.FileType) return a.FileType === "HTML" ? -1 : 1;
 return a.Name.localeCompare(b.Name);
 }
 
@@ -151,7 +151,7 @@ if (u.hostname === "github.com") {
     const path = kind === "tree" || kind === "blob" ? rest.join("/") : "";
     const refs = [];
     if (ref && (kind === "tree" || kind === "blob")) refs.push(ref);
-    refs.push("main", "master", "gh-pages");
+    refs.push("main");
 
     return { owner, repo, path, refs: [...new Set(refs)] };
 }
@@ -167,7 +167,7 @@ if (u.hostname.endsWith(".github.io")) {
     path = pathParts.slice(1).join("/");
     }
 
-    return { owner, repo, path, refs: ["gh-pages", "main", "master"] };
+    return { owner, repo, path, refs: ["main"] };
 }
 
 return null;
@@ -490,13 +490,18 @@ if (resetPosition) elm._textimateState.pos = -msg.length;
 if (elm._textimateDraw) elm._textimateDraw();
 }
 
-function findFirstHtmlNode(node) {
+function findClosestHtmlNode(node) {
 if (!node) return null;
-if (node.FileType === "HTML") return node;
-for (const child of node.Children || []) {
-    const found = findFirstHtmlNode(child);
-    if (found) return found;
+
+const queue = [node];
+while (queue.length > 0) {
+    const current = queue.shift();
+    if (current.FileType === "HTML") return current;
+
+    const children = Array.isArray(current.Children) ? current.Children : [];
+    for (const child of children) queue.push(child);
 }
+
 return null;
 }
 
@@ -504,7 +509,7 @@ async function loadSourceIntoDirTree(source, options = {}) {
 testDir = await buildDirNodeHierarchy(source, options);
 assgum.replaceChildren(WriteDirectory(testDir, 0, assgum));
 
-CurrentLoadedFileNode = findFirstHtmlNode(testDir);
+CurrentLoadedFileNode = findClosestHtmlNode(testDir);
 if (CurrentLoadedFileNode) {
     if (CurrentLoadedFileNode.RealURL) Iframe.src = CurrentLoadedFileNode.RealURL;
     setTextimateText(CurrentFileNameHeader, "Currently Viewing : " + CurrentLoadedFileNode.getFakeDir());
