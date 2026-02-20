@@ -1,0 +1,61 @@
+
+
+/*#first-contact{
+    top: 0; left: 0; bottom: 0; right: 0;
+    display:inline-block;
+    width:100%;
+    height:100%;
+    position:absolute;
+    z-index: -100;
+}*/
+
+
+code{
+    white-space: pre;
+    font-size: large;
+  
+}
+
+#first-contact{
+    display: block;
+    width: 512px;
+    height: 420px;
+}
+
+#wizzzard
+{
+    --geometry: @cube;
+    --position: (0,0,-1.5);
+    --material-color: (0.8,0.2,0.2);
+    --scale : (1,1,1);
+    --transition: 400ms ease-in-out;
+}
+
+
+#wizzzard:hover  {
+    --scale : (1.2,1.2,1.2);
+    --animation : spin360 0.5s linear 1;
+}
+
+@keyframes spin360 {
+  from { --rotation-y: 0; }
+  to   { --rotation-y: 6.283185; }
+}
+
+
+
+.code-cuts{
+    border-color: #07071f;
+    border-style :double;
+    border-width: 6px;
+    background-color: midnightblue;
+    display: inline-block;
+    padding: 2px;
+}
+
+
+
+.dropdown-panel-inner{
+    position:relative;
+    padding-left: 5px;
+}

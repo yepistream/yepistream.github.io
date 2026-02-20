@@ -1,0 +1,91 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 0px;
+    background: #000000;
+}
+
+
+h2, h3{
+    font-weight: normal;
+}
+
+
+#welcome{
+    margin-left: 4%;
+    color : limegreen
+}
+
+.dropdown-trigger {
+    width: 100%;
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: green;
+    background: midnightblue;
+    border: 4px solid blue;
+    border-left: 0; border-right: 0;
+    cursor: pointer;
+    display: block;
+}
+
+.dropdown-trigger:hover{
+    border-color : rgb(0, 0, 124);
+    color: green;
+}
+
+
+.dropdown-trigger.open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-color :  midnightblue;
+    color: darkgreen;
+    border-bottom: 0;
+}
+
+.dropdown-panel {
+    margin-top: 0;
+    padding: 0;
+    background: black;
+    color: whitesmoke;
+    border: 4px solid midnightblue;
+    border-top: 0; border-left: 0; border-right: 0;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;}
+
+.dropdown-panel-inner {
+    padding: 18px 20px;
+}
+
+.dropdown-panel-inner h2 {
+    margin: 0 0 10px 0;
+}
+
+.dropdown-panel-inner p {
+    margin: 0;
+    line-height: 1.55;
+    color: #e0e0e0;
+}
+
+.dropdown-panel.open {
+    opacity: 1;
+}
+
+.typing::after {
+    content: "_";
+    color: limegreen;
+    margin-left: 2px;
+    animation: terminal-caret 900ms steps(1, end) infinite;
+}
+
+@keyframes terminal-caret {
+    50% {
+        opacity: 0;
+    }
+}

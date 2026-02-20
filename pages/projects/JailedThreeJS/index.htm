@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JailedThreeJS - Overview</title>
+    <link rel="stylesheet" href="../../pageTemplateStyle.css">
+    <link rel="stylesheet" href="style.css">
+    <!--TODO : I Certainly need to package this..... -->
+    <script type="importmap"> { 
+        "imports": { 
+            "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.180.0/three.module.js",
+            "three/examples/jsm/loaders/GLTFLoader.js": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/GLTFLoader.js",
+            "three/examples/jsm/loaders/FBXLoader.js": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/FBXLoader.js",
+            "three/examples/jsm/loaders/MTLLoader.js": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/MTLLoader.js"
+        } 
+    } </script>
+</head>
+<body> 
+   <h1 id="welcome" class="terminal-animated">Three.JS Made Easier!</h1>
+
+<!-----------------------------------------WHAT-START------------------------------------------>        
+
+    <main class="content">
+
+        <button class="dropdown-trigger terminal-animated" type="button"
+                aria-expanded="false" aria-controls="info-what">
+            <i><b>WHAT</b></i> is JailedThreeJS?
+        </button>
+
+        <section id="info-what" class="dropdown-panel" aria-hidden="true">
+            <div class="dropdown-panel-inner" >
+            <h1><u><b>JailedThreeJS</b> is a DOM and CSS driven runtime on top of <b>Three.js</b>.</u></h1>
+            
+        
+            <h2>A <code>&lt;cell&gt;</code> becomes a 3D world where HTML tags create real <code>THREE.Object3D</code> instances,
+            and CSS custom properties drive their state.</h2>
+            <div style="height: 10px; width: 100%;"></div>
+            <cell id="first-contact">
+                <perspectivecamera  render></perspectivecamera >
+                <mesh id="wizzzard"></mesh>
+            </cell>
+            <!--<h2 style="  font-size: small; margin-left: 224px;" >WizzDude </p1>-->
+
+            <h2>Here Is The Source For Wizz Dude:</h2>
+                <span style="margin : 5px;">
+
+                    
+                    <h3>HTML describes the scene graph:</h3>
+                    <div class="code-cuts">
+                        <code id="jailbreak">
+                        </code>
+                    </div>
+
+                    <h3>CSS variables control almost any Object3D attribute</h3>
+                    <div class="code-cuts">
+                        <code >
+#wizzzard
+{
+    --geometry: @cube;
+    --position: (0,0,-1.5);
+    --material-color: (0.8,0.2,0.2);
+    --scale : (1,1,1);
+    --transition: 400ms ease-in-out;
+}
+                        </code>
+                    </div>
+
+
+                    <h3>Raycasting enables mesh interaction and pseudo states:</h3>
+                    <div class="code-cuts">
+<code>#wizzzard:hover  {
+    --scale : (1.2,1.2,1.2);
+    --animation : spin360 0.5s linear 1;
+}</code>
+                    </div>
+
+                    <h3>Even KeyFrames Work:</h3>
+                    <div class="code-cuts">
+                        <code>@keyframes spin360 {
+  from { --rotation-y: 0; }
+  to   { --rotation-y: 6.283185; }
+} </code>
+                    </div>
+
+
+                </span>
+            </div>
+            
+        </section>
+
+<!-----------------------------------------WHAT-END-------------------------------------------->        
+
+
+
+<!-----------------------------------------WHY-START------------------------------------------>        
+        <button class="dropdown-trigger terminal-animated" type="button"
+                aria-expanded="false" aria-controls="info-who">
+            <i><b>Why</b></i> does JailedThreeJS Exist?
+        </button>
+
+        <section id="info-who" class="dropdown-panel" aria-hidden="true">
+            <div class="dropdown-panel-inner">
+            <h2 style="text-align: justify;">
+    I wanted 3D to feel web native.
+    <br>
+    Three.js is powerful, but most projects turn into JS boilerplate for setup, state, input, and animation.
+    <br>
+    I wanted a system where structure lives in HTML, animation and styling live in CSS, and you only write JS when you actually need logic.
+    <br>
+            </h2>
+            </div>
+        </section>
+<!-----------------------------------------WHY-END-------------------------------------------->
+
+
+
+<!-----------------------------------------HOW-START------------------------------------------>        
+
+        <button class="dropdown-trigger terminal-animated" type="button" aria-expanded="false" aria-controls="info-box">
+            <i><b>HOW</b></i> JailedThreeJS Works (Quick-Rundown)
+        </button>
+
+        <section id="info-box" class="dropdown-panel" aria-hidden="true">
+            <div class="dropdown-panel-inner">
+                <h1>In short this is not overly complicated and this is a more of a <u><i>TL;DR Technical Overview</i></u> : </h1>
+            <div class="code-cuts">
+            <h2><b>->Bootstraps automatically</b>: finds all <code>&lt;cell&gt;</code> elements and overlays a WebGL canvas</h2>
+            <br>
+            <h2><b>->Tag to constructor mapping</b>: builds a map from <code>THREE</code> exports, so most <code>Object3D</code> subclasses are creatable as tags</h2>
+            <br>
+            <h2><b>->DOM to scene graph</b>: scans children and adds created objects to the focused cell scene</h2>
+            <br>
+            <h2><b>->CSS to property paths</b>: <code>--a-b-c</code> maps to <code>object.a.b.c</code>, with smart assignment for vectors and setters</h2>
+            <br>
+            <h2><b>->Pseudo states</b>: raycast hits set flags like <code>:hover</code>, <code>:active</code>, <code>:focus</code>, then matching CSS rules repaint</h2>
+            <br>
+            <h2><b>->Transitions</b>: <code>--transition</code> lerps numeric and array values with easing</h2>
+            <br>
+            <h2><b>->Keyframes</b>: <code>--animation</code> plays CSS <code>@keyframes</code> by lerping custom properties over time</h2>
+            <br>
+            <h2><b>->Assets</b>: CSS <code>@AssetName</code> rules define URLs, then <code>@name</code> resolves to loaded models, textures, audio, or materials</h2>
+            <br>
+            <h2><b>->Cross object referencing</b>: values like <code>#otherId-position-x</code> can read from another object inside the same cell</h2>
+            <br>
+            <h2><b>->Reactivity</b>: MutationObservers watch DOM and style changes and repaint the affected objects</h2>
+            </div>
+            
+            <br>
+            <br>
+            <div style="color: limegreen; text-align: center;">
+                <h1>Extra links : </h1>
+                <h2>Github Repo: <a href="https://github.com/yepistream/JailedThreeJS/">https://github.com/yepistream/JailedThreeJS</a></h2>
+                <h2>NPM : <a href="https://www.npmjs.com/package/jailedthreejs">https://www.npmjs.com/package/jailedthreejs</a></h2>
+                <h2>Deep-Wiki: <a href="https://deepwiki.com/yepistream/JailedThreeJS/1-getting-started">https://deepwiki.com/yepistream/JailedThreeJS/2.3-css-styling-for-3d</a></h2>
+            </div>
+        </div>
+            
+        </section>
+
+    </main>
+
+
+     <script type="module">
+        import { JThree } from './dist/index.js';
+        import { Cell } from './dist/index.js';
+        
+        const cell = Cell.getCell(document.getElementById('first-contact'));
+        const wizz  = cell.getConvictById('wizzzard');
+
+        const jailbreak = document.getElementById("jailbreak");
+
+        jailbreak.innerText = 
+`<cell id="first-contact">
+    <perspectivecamera  render></perspectivecamera >
+    <mesh id="wizzzard"></mesh>
+</cell> `
+
+    </script>
+<!-----------------------------------------HOW-END-------------------------------------------->        
+
+
+    
+    
+    <script src="../../pageUtils.js"></script>
+    <!-- Refrence 
+    <script type="module" src="./dist/index.js"></script>
+    <style>
+        .box {
+            --geometry: @cube;
+            --position: (0,0,-5);
+            --scale: (1,1,1);
+            --material-color: (0.8,0.2,0.2);
+            --transition: 400ms ease-in-out;
+        }
+        .box:hover  { --material-color: (0.2,0.8,0.9); }
+        .box:active { --scale: (1.2,1.2,1.2); }
+    </style>
+
+    <cell id="demo" style=" display:block;   width:860px;    height:320px;   background:#05070f; ">
+        <perspectivecamera render></perspectivecamera>
+        <mesh id="box" class="box" onclick="spin(this)"></mesh>
+    </cell>
+
+    
+
+    <script type="module">
+        import { JThree } from './dist/index.js';
+        import { Cell } from './dist/index.js';
+        const cell = Cell.getCell(document.getElementById('demo'));
+        const box  = cell.getConvictById('box');
+
+        cell.addUpdateFunction(function () { box.rotation.y += 0.01; });
+        window.spin = (mesh) => mesh.style.setProperty('--rotation-y', box.rotation.y + Math.PI);
+    </script>
+    -->
+</body>
+</html>
