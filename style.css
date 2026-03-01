@@ -1,89 +1,94 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
-
-
-* { box-sizing: border-box;  
+@font-face {
+  font-family: 'jetbrainsMono';
+  src: url('./res/fonts/JetBrainsMono-Medium.ttf') format('truetype');
+  font-weight: normal;
 }
 
-html, body { margin: 0; height: 100%; padding: 0;  
-font-family: 'Courier New', Courier, monospace;
--webkit-font-smoothing: none;
--moz-osx-font-smoothing: auto;
-text-rendering: optimizeSpeed;
-background-color: rgb(17, 17, 17); color: limegreen;}
-
-.app {
-    height: 100vh;
-    width: 100vw;
-    display: grid;
-    grid-template-rows: 10% 90%;
+@font-face {
+  font-family: 'jetbrainsMono';
+  src: url('./res/fonts/JetBrainsMono-Bold.ttf') format('truetype');
+  font-weight: bold;
 }
 
-#Heading {
-    border: 1px solid #333;
-    padding: 12px;
-    overflow: auto;
-    
-    font-weight: 100;
+
+
+*{
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
 }
 
-#Main {
-    display: grid;
-    grid-template-columns: 30% 70%;
-    min-height: 0;
+
+body{
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
 }
 
-#DirTree_container {
-    display: grid;
-    grid-template-rows: 10% 90%;
-    border: 1px solid #333;
-    border-top: 0;
-    overflow: auto;
-    min-width: 0;
-    min-height: 0;
+
+
+#cam{
+  --position : (1.19,-0.3,-2);
 }
 
-#DirTree_Header {
-    border-bottom: 1px solid #333;
-    padding-top: 6%;
-    overflow: hidden;
-    min-width: 0;
-    min-height: 0;
-    font-size:larger;
-    font-weight: lighter;
+.pf-object{
+  --geometry: @cube;
+  --material-color : (0,0,0);
+  --position : (0,0,0);
+
 }
 
-#DirTree {
-    padding: 12px;
-    overflow: auto;
-    min-width: 0;
-    min-height: 0;
-    letter-spacing: 0px;
-    word-spacing: 0px;
-    font-size: 14px;
-    font-weight: 800;
+#root{
+  --position : (0,0,-7);
+  --animation : rootrotating 35.5s linear infinite;
 }
 
-#iframeContainerMain {
-    border: 1px solid #333;
-    border-top: 0;
-    border-left: 0;
-    padding: 0;
-    overflow: auto;
-    min-width: 0;
-    min-height: 0;
+.r-name{
+  font-family: 'jetbrainsMono';
+  color: lightgray;
+  font-size: xx-large;
+  user-select: none;
+  background-color: black;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  border: 4px rgb(161, 161, 161) dotted;
+  border-radius: 50%;
+
+  padding: 16px 22px;   /* controls size */
+  aspect-ratio: 1 / 1;  /* keep it a circle */
+  min-width: 200px;     /* optional: keeps a baseline size */
 }
 
-#iframeMain{
-    display: inline-block;
-    width: 100%;
-    height: 100%;
+.r-name:hover{
+  color : whitesmoke;
+  cursor: pointer;
+  border: 4px rgb(66, 66, 66) solid;
+  font-weight: bold;
 }
 
-.clickable_text{
-    cursor :pointer;
+.r-name-hidden{
+  display: none;
 }
-.clickable_text:hover{
-    color: green;
-    
+
+
+
+
+@keyframes rootrotating{
+  0%{
+    --rotation-z : 0;
+  }
+  50%{
+    --rotation-z : 3.14;
+  }
+
+  100%{
+    --rotation-z : 6.28;
+  }
 }
+
+
+

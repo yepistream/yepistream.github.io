@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorcherer Demo Page</title>
+     <script type="importmap"> { 
+        "imports": { 
+            "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.180.0/three.module.js",
+            
+            "three/examples/jsm/loaders/GLTFLoader.js": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/GLTFLoader.js",
+            "three/examples/jsm/loaders/FBXLoader.js": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/FBXLoader.js",
+            "three/examples/jsm/loaders/MTLLoader.js": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/MTLLoader.js",
+            "three/examples/jsm/loaders/OBJLoader.js":  "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/OBJLoader.js",
+
+            "sorcherer"     : "../../node_modules/sorcherer/src/sorcherer.js",
+            "jailedthreejs" : "../../node_modules/jailedthreejs/dist/lib/index.js"
+            } 
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <cell id="cell-demo" style="width: 100%; height: 100%; display: inline-block;">
+        <ambientlight id="amb-light"></ambientlight>
+        <mesh id="cubeForDemo">
+            <mesh id="dirty"></mesh>
+        </mesh>
+        <perspectivecamera id="main-cam" render></perspectivecamera>
+    </cell>
+
+    <realm>
+        <div idm="cubeForDemo" autoCenter="false" simulate3D="true" offset="1,4,0">
+            <div id="demo-header">
+                 <main class="wrap">
+                    <div class="section">
+                    <details>
+                        <summary><u><b>WHAT</b></u> is Sorcherer?</summary>
+                        <div class="content">
+                        <h2>
+                            Sorcherer is a small Three.js helper library that lets you “pin” real HTML/DOM UI elements onto
+                            Object3Ds in your scene (labels, tooltips, images, HUD-ish bits), and keeps them synced as the
+                            camera/object moves.
+                        </h2>
+                        </div>
+                    </details>
+                    </div>
+
+                    <div class="section">
+                    <details>
+                        <summary><u><b>WHY</b></u> is Sorcherer?</summary>
+                        <div class="content">
+                        <h2>Easier way to integrate DOM-elements into Three.js. It can allow for:</h2>
+
+                        <ul class="bullets">
+                            <li><b>HTML</b> (fonts, layout, inputs, accessibility, CSS) for UI and similar.</li>
+                            <li>
+                            If you want those elements to behave like it’s <u><i>“in”</i></u> the 3D world
+                            (stick to objects, scale with distance, hide when off-screen/behind).
+                            </li>
+                        </ul>
+                        </div>
+                    </details>
+                    </div>
+
+                    <div class="section">
+                    <details>
+                        <summary><u><b>HOW</b></u> does Sorcherer work?</summary>
+                        <div class="content">
+                        <h2>Conceptually, it’s a per-frame sync step:</h2>
+
+                        <h3>Register a mapping: Object3D  DOM element (commonly via object.name / an id-matching scheme).</h3>
+
+                        <h2><u><b>Each render tick:</b></u></h2>
+                        <ol class="bullets">
+                            <li>Compute each object’s world position.</li>
+                            <li>Project it through the camera to screen space (NDC → pixel coords).</li>
+                            <li>Update the overlay element’s CSS transform (translate to x/y).</li>
+                            <li>Optionally apply distance-based scaling so it shrinks/grows with depth.</li>
+                            <li>Optionally apply “simulate3D” transforms (limited; depends on implementation).</li>
+                            <li>Cull overlays that are out of view (and often ones “behind” the camera), to avoid DOM churn.</li>
+                        </ol>
+
+                        <h2><b>That’s it</b>: a tight loop that turns 3D transforms into DOM transforms, plus culling + scale heuristics.</h2>
+                        </div>
+                    </details>
+                    </div>
+
+                    <div class="section">
+                    <details>
+                        <summary>Cast The <u><b>MAGIC</b></u></summary>
+                        <div class="content">
+                        <div class="btns">
+                            <button type="button">Forward-Backwards</button>
+                            <button type="button">Left-Right</button>
+                            <button type="button">Up-Down</button>
+                        </div>
+                        </div>
+                    </details>
+                    </div>
+                    <div id="bottom-links">
+                        <a href="https://github.com/yepistream/sorcherer" target="_blank" rel="noopener">
+                            <img
+                                src="https://cdn.jsdelivr.net/npm/simple-icons@16.9.0/icons/github.svg"
+                                alt="GitHub"
+                            >
+                        </a>
+
+                        <a href="https://www.npmjs.com/package/sorcherer" target="_blank" rel="noopener">
+                            <img
+                                src="https://cdn.jsdelivr.net/npm/simple-icons@16.9.0/icons/npm.svg"
+                                alt="npm"
+                            >
+                        </a>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <div idm="dirty" autoCenter="true" simulate3D="true" offset="0.12,3,0">
+            <h1 style="color:white">
+                [Wizzz_Dude]
+            </h1>
+        </div>
+    </realm>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

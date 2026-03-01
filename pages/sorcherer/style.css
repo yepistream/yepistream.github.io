@@ -1,0 +1,193 @@
+*{
+    margin : 0;
+    padding: 0;
+}
+
+html,body{
+    width  : 100vw;
+    height : 100vh;
+    overflow: hidden;
+}
+
+
+
+.wrap{
+  height: 100vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding-bottom: 60px;
+}
+.section {
+    border-bottom: 4px groove lightslategrey;
+    background-color: whitesmoke;
+    padding: 12px 0;
+}
+.section:last-child { border-bottom: 1px solid rgba(255,255,255,.12); }
+
+details { margin: 0; }
+summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 14px 14px 14px 44px;
+    background: lightgrey;
+    position: relative;
+    user-select: none;
+    outline: none;
+}
+summary::-webkit-details-marker { display: none; }
+
+/* left-hand dropdown indicator */
+summary::before {
+    content: "▸";
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: .9;
+    transition: transform .2s ease;
+}
+details[open] summary::before {
+    transform: translateY(-50%) rotate(90deg);
+}
+details[open] summary{
+    font-size:x-large;
+}
+
+
+.content {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: max-height .35s ease, opacity .25s ease, transform .25s ease;
+    padding: 0 10px;
+}
+details[open] .content {
+    max-height: 900px;
+    opacity: 1;
+    transform: translateY(0);
+    padding: 14px 10px 4px;
+}
+
+h1, h2, h3 { margin: 10px 0; }
+h1 { font-size: 28px; }
+h2 { font-size: 18px; font-weight: 500; opacity: .95; }
+h3 { font-size: 16px; font-weight: 500; opacity: .95; }
+
+.bullets { text-align: left; max-width: 720px; margin: 10px auto 0; }
+.bullets li { margin: 8px 0; line-height: 1.5; }
+
+.btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; padding: 10px 0 6px; }
+button {
+    border: 6px groove lightgrey;
+    background: whitesmoke;
+    font-weight: bold;
+    color: inherit;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: background .12s ease, transform .12s ease; /* no keyframe animation */
+}
+button:hover {
+    background: whitesmoke; 
+    transform: translateY(-1px); 
+    font-size:large;
+    border-color: grey;
+ }
+
+
+@wizzdudemesh{
+    url: "/res/ShitDude.obj";
+}
+
+#amb-light{
+    --intensity : 5;
+}
+
+#cubeForDemo{  
+    --geometry : wizzdudemesh;
+    --position : (-2.5,-2,-3);
+    --rotation : (0,0,0);
+    --scale    : (1,1,1);
+}
+
+
+
+#main-cam{
+    --positon : (0,0,0);
+}
+
+#demo-header{
+    display: inline-block;
+    border: 10px groove lightslategray ;
+    background-color: rgba(255, 255, 255, 0.301);
+    transition: all 250ms;
+    user-select: none;
+    width: 10px;
+    height: 25px;
+}
+
+/* --position : (-2.5,-0.8,-3); */
+@keyframes magic0 {
+    0%{
+        --position-z :  -3;
+    }
+    50%{
+        --position-z :  -6;
+    }
+    100%{
+        --position-z :  -3;
+    }
+}
+
+@keyframes magic1 {
+    0%{
+        --position-x :  -2.5;
+    }
+    50%{
+        --position-x :  2.5;
+    }
+    100%{
+        --position-x :  -2.5;
+    }
+}
+
+@keyframes magic2 {
+    0%{
+        --position-y :  -2;
+    }
+    50%{
+        --position-y :  2;
+    }
+    100%{
+        --position-y :  -2;
+    }
+}
+
+
+
+
+
+#bottom-links{
+    display:flex;
+    margin-top: 5px;
+    gap:12px;
+    align-items:center;
+    justify-content: center;
+    width: 100%;
+}
+
+#bottom-links a img{
+    align-self: center;
+    
+    width:36px;
+    height:36px;
+    display:block;
+    opacity:.85;
+    transition:transform 120ms ease, opacity 120ms ease;
+    filter: invert(1); 
+}
+
+#bottom-links a:hover img{
+    transform:scale(1.15);
+    opacity:1;
+}

@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dropdown + Stars</title>
+  <style>
+    :root { --fg: rgb(202, 202, 202); --line: currentColor;  }
+
+    html,body{margin:0;min-height:100%;overflow-x:hidden;}
+    body{background:#000;color:var(--fg);font:16px/1.5 system-ui;}
+
+    canvas{
+      position:fixed; inset:0;
+      width:100vw; height:100vh;
+      z-index:-1;
+      image-rendering:pixelated;
+    }
+
+    h1{ text-align:center; margin:40px 0 24px; }
+
+    main{
+      width:min(900px, calc(100% - 32px));
+      margin:0 auto 60px;
+    }
+
+    /* ---- dropdown ---- */
+    details.dropdown{
+      position:relative;
+      padding:14px 0;
+    }
+
+    /* full-width underline that follows the expanding details */
+    details.dropdown::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      bottom:0;
+      width:100vw;
+      height:1px;
+      transform:translateX(-50%);
+      background:var(--line);
+      opacity:.55;
+    }
+
+    summary.dropdown-trigger{
+      cursor:pointer;
+      user-select:none;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:6px 0;
+      text-align:left; /* trigger reads nicer */
+    }
+    summary.dropdown-trigger::-webkit-details-marker{ display:none; }
+    summary.dropdown-trigger::marker{ content:""; }
+
+    summary.dropdown-trigger:focus-visible{
+      outline:2px solid currentColor;
+      outline-offset:6px;
+    }
+
+    .chev{
+      width:10px;height:10px;
+      border-right:2px solid currentColor;
+      border-bottom:2px solid currentColor;
+      transform:rotate(45deg);
+      transition:transform 240ms ease;
+      opacity:.8;
+      flex:0 0 auto;
+    }
+    details[open] .chev{ transform:rotate(225deg); }
+
+    /* smooth open/close + "drops down" */
+    .dropdown-panel{
+      display:grid;
+      grid-template-rows:0fr;
+      opacity:0;
+      transition:grid-template-rows 320ms ease, opacity 220ms ease;
+    }
+    details[open] .dropdown-panel{
+      grid-template-rows:1fr;
+      opacity:1;
+    }
+
+    .dropdown-panel-inner{
+      overflow:hidden;
+      padding:10px 0 6px;
+      transform:translateY(-10px);
+      transition:transform 320ms ease;
+      text-align:center;
+    }
+    details[open] .dropdown-panel-inner{
+      transform:translateY(0);
+    }
+
+    /* keep lists readable */
+    .dropdown-panel-inner ul{
+      display:inline-block;
+      text-align:left;
+      margin:0 auto;
+      padding-left:22px;
+    }
+    .dropdown-panel-inner li{ text-align:left; }
+
+    @media (prefers-reduced-motion: reduce){
+      .dropdown-panel, .dropdown-panel-inner, .chev{ transition:none !important; }
+    }
+  </style>
+</head>
+<body>
+  <h1 id="welcome">This Page Is The Doormat To My Site</h1>
+
+  <main class="content">
+    <details class="dropdown">
+      <summary class="dropdown-trigger">
+        <h2><u><i><b>WHAT</b></i></u> is this place?</h2>
+        <span class="chev" aria-hidden="true"></span>
+      </summary>
+
+      <div class="dropdown-panel">
+        <div class="dropdown-panel-inner">
+          <h2>This is my little corner of the internet.</h2>
+          <p>
+            These days, you don’t make this kind of media (<u>websites</u>) purely out of <i>love</i>.
+            You also make it to show what you’ve built, and to justify the time spent in front of a glowing box.
+          </p>
+          <p>
+            So yeah: this is my portfolio and also a way to keep my sanity in-check.
+          </p>
+        </div>
+      </div>
+    </details>
+
+    <details class="dropdown">
+      <summary class="dropdown-trigger">
+        <h2><u><i><b>WHO</b></i></u> made this place?</h2>
+        <span class="chev" aria-hidden="true"></span>
+      </summary>
+
+      <div class="dropdown-panel">
+        <div class="dropdown-panel-inner">
+          <h2>Simple answer: Marko Kazimirović (me).</h2>
+
+          <p>
+            I started like a lot of people: <b style="font-size: large;">video games</b>. I watched my brother and dad play,
+            then one day my brother put me on his lap and showed me how.
+          </p>
+
+          <p>
+            After that I couldn’t stop wondering how a beige box and a blinking box could show entire worlds.
+            I opened Internet Explorer and typed: <u>“How do computers work?”</u>
+            And that's about it.
+          </p>
+
+          <h3>Today I mostly enjoy:</h3>
+          <ul>
+            <li><b>Bridging virtual and physical worlds</b> -> AR/VR systems that thin the wall between real and virtual.</li>
+            <li><b>Low-level work</b> -> performance, control, and systems you can actually reshape when needed.</li>
+            <li><b>Graphics / engine fundamentals</b> -> rendering, timing, pipelines, and toy engines.</li>
+            <li><b>Tooling + architecture</b> -> reusable, composable systems instead of one-off code.</li>
+            <li><b>Emergent systems</b> -> fewer “a thousand IFs”, more rules that let behavior unfold.</li>
+          </ul>
+
+          <p>
+            I see programming as an art form, systems unraveling into purely magnificent things using only their creators ideas and thoughts.
+            It just might be the only thing that still keeps me wondering.
+          </p>
+        </div>
+      </div>
+    </details>
+
+    <details class="dropdown">  
+      <summary class="dropdown-trigger">
+        <h2><u><i><b>HOW</b></i></u> To Contact Me?</h2>
+        <span class="chev" aria-hidden="true"></span>
+      </summary>
+
+      <div class="dropdown-panel">
+        <div class="dropdown-panel-inner">
+          <h3>
+            I'm free most of the time, currently looking for employment, but if you need a question answered
+            or just need to talk to somebody, feel free to contact me:
+          </h3>
+
+          <h4>
+            E-MAIL :
+            <a style="font-weight: normal;" href="mailto:kazimirovicmarko@proton.me">kazimirovicmarko@proton.me</a>
+          </h4>
+
+          <h3>
+            If you’re viewing my page for employment reasons (or stalking me), here’s my GitHub too :D
+          </h3>
+
+          <h4>
+            GITHUB :
+            <a style="font-weight: normal;" href="https://github.com/yepistream">https://github.com/yepistream</a>
+          </h4>
+        </div>
+      </div>
+    </details>
+    
+    <details class="dropdown">
+      <summary class="dropdown-trigger">
+        <h2><u><i><b>TIPS :</b></i></u></h2>
+        <span class="chev" aria-hidden="true"></span>
+      </summary>
+
+      <div class="dropdown-panel">
+        <div class="dropdown-panel-inner">
+        <h1 class="terminal-animated">CONTROLS :</h1>
+        <h3 class="terminal-animated">[Mouse Drag] -> Move Left To Right</h3>
+        <h3 class="terminal-animated">[Scroll Wheel] -> Move Back And Fourth</h3>
+        <h1 class="terminal-animated">TIPS :</h1>
+        <h3 class="terminal-animated">Upper Right Part Of This Window You Can Close It</h3>
+        <h3 class="terminal-animated">You Can Also Move This Window By Dragging the navbar, and resize it by dragging the edges</h3>
+        <h2 class="terminal-animated">Have Fun!</h2>
+        </div>
+      </div>
+    </details>
+  </main>
+
+  <canvas id="bg"></canvas>
+
+  <script>
+    // ---- starfield ----
+    const c = document.getElementById("bg");
+    const ctx = c.getContext("2d", { alpha: true });
+
+    const SCALE = 2;
+    const STAR_COUNT = 200;
+    let W=0, H=0;
+    const stars = [];
+    const rand = (a,b)=>a+Math.random()*(b-a);
+
+    function resize(){
+      c.width  = Math.max(1, (innerWidth  / SCALE) | 0);
+      c.height = Math.max(1, (innerHeight / SCALE) | 0);
+      W = c.width; H = c.height;
+
+      stars.length = 0;
+      for(let i=0;i<STAR_COUNT;i++){
+        stars.push({ x:rand(0,W), y:rand(0,H), v:rand(3,20), ph:rand(0,Math.PI*2), tw:rand(1.2,4.5) });
+      }
+      console.log("[stars] resize", {W,H,STAR_COUNT});
+    }
+
+    function plot(x,y,a){
+      ctx.globalAlpha = a;
+      ctx.fillRect(x|0, y|0, 1, 1);
+      if (((x|0) ^ (y|0)) & 2){
+        ctx.fillRect((x|0)-1, y|0, 1, 1);
+        ctx.fillRect((x|0)+1, y|0, 1, 1);
+        ctx.fillRect(x|0, (y|0)-1, 1, 1);
+        ctx.fillRect(x|0, (y|0)+1, 1, 1);
+      }
+    }
+
+    const speed = 0.01;
+    let last = performance.now();
+
+    function frame(t){
+      const dt = Math.min(0.05, (t-last)/1000);
+      last = t;
+
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0,0,W,H);
+
+      ctx.fillStyle = "#fff";
+      for(const s of stars){
+        s.y += s.v * speed * dt;
+        if (s.y >= H){ s.y -= H; s.x = rand(0,W); }
+
+        const tw = 0.25 + 0.75*(0.5 + 0.5*Math.sin(t*0.001*s.tw + s.ph));
+        plot(s.x, s.y, tw);
+      }
+
+      requestAnimationFrame(frame);
+    }
+
+    addEventListener("resize", resize, { passive:true });
+    resize();
+    requestAnimationFrame(frame);
+
+    // ---- optional: only one dropdown open ----
+    document.querySelectorAll("details.dropdown").forEach((d) => {
+      d.addEventListener("toggle", () => {
+        if (!d.open) return;
+        document.querySelectorAll("details.dropdown[open]").forEach((x) => {
+          if (x !== d) x.open = false;
+        });
+      });
+    });
+  </script>
+</body>
+</html>

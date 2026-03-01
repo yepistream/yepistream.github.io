@@ -1,25 +1,75 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Layout</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marko Kazimirovic</title>
+    <script type="importmap"> { 
+        "imports": { 
+            "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.180.0/three.module.js",
+            "three/examples/jsm/loaders/GLTFLoader.js": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/GLTFLoader.js",
+            "three/examples/jsm/loaders/FBXLoader.js":  "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/FBXLoader.js",
+            "three/examples/jsm/loaders/MTLLoader.js":  "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/MTLLoader.js",
+            "three/examples/jsm/loaders/OBJLoader.js":  "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/OBJLoader.js",
+            "sorcherer" :  "./node_modules/sorcherer/src/sorcherer.js",
+            "jailedthreejs" : "./node_modules/jailedthreejs/dist/lib/index.js"
+            } 
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./win98-iframe.css">
 </head>
-<body>
-    <div class="app">
-    <div id="Heading"><h1>Marko Kazimirovic / BamBam - Overview && Thoughts</h1></div>
-    <div id="Main">
-      <div id="DirTree_container">
-        <div id="DirTree_Header">DirTree_Header</div>
-        <div id="DirTree">DirTree</div>
-      </div>
-      <div id="iframeContainerMain">
-        <iframe id="iframeMain" src="www.google.com"></iframe>
-      </div>
+    <body>
+    <div id="quickshow-window" class="w98-window">
+     <div id="quickshow-navbar" class="w98-titlebar">
+        <div class="w98-titlebar-left">
+        <div class="w98-title" id="quickshow-title">QuickShow</div>
+        </div>
+
+        <button id="quickshow-close" class="w98-btn w98-btn--close" type="button" aria-label="Close">X</button>
     </div>
-  </div>
-  <script src="script.js">
-  </script>
-</body>
+
+    <iframe id="quickshow-iframe" class="w98-iframe" src="./tutorial.htm"></iframe>
+    </div>
+
+
+    <script src="./win98-iframe.js"></script>
+
+        <cell id="root-cell" style="width: 100%; height: 100%; display : inline-block;">
+            <mesh  class="pf-object" id="root">
+               <!-- <mesh class="pf-object" id="Thoughts">
+                    <mesh class="pf-object" id="STUB"></mesh>
+                    <mesh class="pf-object" id="TRYING TO THINK"></mesh>
+                    <mesh class="pf-object" id="THIS IS EMPTY"></mesh>
+                    <mesh class="pf-object" id="FORMING THOUGHTS"></mesh>
+                    <mesh class="pf-object" id="THERE IS NOTHING HERE!"></mesh>
+                </mesh>-->
+                <mesh class="pf-object" id="Projects">
+                    <mesh class="pf-object" id="CanvasOnKanvas">
+                    
+                    </mesh>
+                    <mesh class="pf-object" id="JailedThreeJS">
+                        
+                    </mesh>
+                    <mesh class="pf-object" id="Sorcherer">
+
+                    </mesh>
+                </mesh>
+                <mesh class="pf-object" id="Introduction">
+                </mesh>
+            </mesh>
+            <perspectivecamera id="cam" render></perspectivecamera>
+        </cell>
+        
+        <!-- <tag id="object3d-name" class = "object3d-parent-name" ></tag>  -->
+        <realm>
+            <div idm="root" autoCenter="false" simulate3D="true" offset="0,0,0">
+                <div id="root" class="r-name">
+                    <h1 id="root">Welcome</h1>
+                </div>
+            </div>
+        </realm>
+
+        <script type="module" src="script.js"></script>
+    </body>
 </html>
