@@ -18,7 +18,7 @@
   }
 })();
 
-import { Vector3, Frustum, Matrix4 } from 'three';
+import { Vector3, Frustum, Matrix4, Box3 } from 'three';
 
 class Sorcherer {
   // All overlay instances (stored in a Set)
@@ -42,8 +42,11 @@ class Sorcherer {
   // Default scale multiplier (developers can change this via Sorcherer.defaultScaleMultiplier).
   static defaultScaleMultiplier = 1;
   static _tempWorldPos = new Vector3();
+  static _tempCameraPos = new Vector3();
   static _tempProjectedPos = new Vector3();
   static _tempFrustumPos = new Vector3();
+  static _tempBounds = new Box3();
+  static _tempBoundsSize = new Vector3();
 
   static ensureContainerAttached() {
     if (typeof document === 'undefined' || !Sorcherer.container) return;
@@ -97,6 +100,35 @@ class Sorcherer {
     if (raw == null) return undefined;
     const value = parseFloat(raw);
     return Number.isFinite(value) ? value : undefined;
+  }
+
+  static _measureObjectSize(object) {
+    if (!object) return 1;
+
+    object.updateWorldMatrix(true, false);
+
+    const geometry = object.geometry;
+    if (!geometry) return 1;
+
+    if (!geometry.boundingBox) {
+      geometry.computeBoundingBox();
+    }
+
+    if (!geometry.boundingBox) return 1;
+
+    const localBounds = Sorcherer._tempBounds.copy(geometry.boundingBox);
+    const transformedBounds = Sorcherer._tempBoundsSize;
+    const worldScale = Sorcherer._tempCameraPos;
+
+    localBounds.getSize(transformedBounds);
+    object.getWorldScale(worldScale);
+
+    const scaledX = Math.abs(transformedBounds.x * worldScale.x);
+    const scaledY = Math.abs(transformedBounds.y * worldScale.y);
+    const scaledZ = Math.abs(transformedBounds.z * worldScale.z);
+    const size = Math.max(scaledX, scaledY, scaledZ);
+
+    return (Number.isFinite(size) && size > 0) ? size : 1;
   }
 
   /**
@@ -249,20 +281,43 @@ class Sorcherer {
       return;
     }
 
+    this.object.updateWorldMatrix(true, false);
+    camera.updateWorldMatrix(true, false);
+    if (camera.matrixWorldInverse?.copy) {
+      camera.matrixWorldInverse.copy(camera.matrixWorld).invert();
+    }
+
     const objectWorldPos = Sorcherer._tempWorldPos;
-    this.object.getWorldPosition(objectWorldPos);
-    if (this.offset) objectWorldPos.add(this.offset);
+    if (this.offset) {
+      objectWorldPos.copy(this.offset);
+      this.object.localToWorld(objectWorldPos);
+    } else {
+      this.object.getWorldPosition(objectWorldPos);
+    }
 
     let distance = camera.position.distanceTo(objectWorldPos);
     if (!Number.isFinite(distance) || distance <= 0) distance = 0.0001;
 
+    const cameraSpacePos = Sorcherer._tempCameraPos;
+    cameraSpacePos.copy(objectWorldPos).applyMatrix4(camera.matrixWorldInverse);
+    const depth = -cameraSpacePos.z;
+    if (!Number.isFinite(depth) || depth <= 0) {
+      Sorcherer._hideOverlay(this);
+      return;
+    }
+    if (camera.isPerspectiveCamera && Number.isFinite(camera.near) && depth <= camera.near) {
+      Sorcherer._hideOverlay(this);
+      return;
+    }
+
     const projectedPos = Sorcherer._tempProjectedPos;
     projectedPos.copy(objectWorldPos).project(camera);
 
+    const viewportRect = domElement.getBoundingClientRect();
     const widthHalf = viewportWidth / 2;
     const heightHalf = viewportHeight / 2;
-    const x = widthHalf * (projectedPos.x + 1);
-    const y = heightHalf * (1 - projectedPos.y);
+    const x = viewportRect.left + widthHalf * (projectedPos.x + 1);
+    const y = viewportRect.top + heightHalf * (1 - projectedPos.y);
 
     let transform = `translate(${x}px, ${y}px)`;
     if (this.autoCenter) {
@@ -272,7 +327,16 @@ class Sorcherer {
 
     if (this.simulate3D) {
       const referenceDistance = 5;
-      const scale = Math.max(0.1, this.scaleMultiplier * (referenceDistance / distance));
+      const objectSizeFactor = Sorcherer._measureObjectSize(this.object);
+      let depthScaleFactor = referenceDistance / depth;
+      if (camera.isPerspectiveCamera) {
+        depthScaleFactor = referenceDistance / depth;
+      } else if (camera.isOrthographicCamera) {
+        depthScaleFactor = camera.zoom || 1;
+      }
+
+      const rawScale = this.scaleMultiplier * objectSizeFactor * depthScaleFactor;
+      const scale = (Number.isFinite(rawScale) && rawScale > 0) ? rawScale : 0.001;
       transform += ` scale(${scale})`;
     }
 
@@ -281,6 +345,7 @@ class Sorcherer {
       transform += ` rotate(${angleDeg}deg)`;
     }
 
+    this._parentSpan.style.transformOrigin = this.autoCenter ? 'center center' : 'top left';
     this._parentSpan.style.transform = transform;
     this._parentSpan.style.zIndex = Math.round(1000 / distance).toString();
     this._parentSpan.style.display = 'block';

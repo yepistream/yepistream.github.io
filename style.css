@@ -27,68 +27,117 @@ body{
 
 
 
-#cam{
-  --position : (1.19,-0.3,-2);
+#debug{
+  font-size: 500px;
+  color: hotpink;
 }
 
-.pf-object{
-  --geometry: cube;
-  --material-color : (0,0,0);
-  --position : (0,0,0);
 
+#cam-parent{
+  --position : (0,0,0);
+}
+
+#cam{
+  --fov : 70;
+  --position : (0,8,-8);
 }
 
 #root{
-  --position : (0,0,-7);
-  --animation : rootrotating 35.5s linear infinite;
+  --animation : rot0 65.5s linear infinite; 
+  --geometry : sphere;  
+  --scale : (1.5,1.5,1.5);
+  --position : (0,0,0);
 }
+
+
+.pf-object{
+  --geometry : sphere;
+  --material-color : #FFFFFF;
+} 
+
+
 
 .r-name{
   font-family: 'jetbrainsMono';
-  color: lightgray;
-  font-size: xx-large;
+  color: black  ;
+  font-size: clamp(40px, 60px, 140px);
   user-select: none;
-  background-color: black;
+
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-
-  border: 4px rgb(161, 161, 161) dotted;
+  border: 4px rgba(161, 161, 161,1.0) none;
   border-radius: 50%;
 
   padding: 16px 22px;   /* controls size */
   aspect-ratio: 1 / 1;  /* keep it a circle */
-  min-width: 200px;     /* optional: keeps a baseline size */
+  min-width: 250px;     /* optional: keeps a baseline size */
+  max-width: 350px;
 }
+
+
+#root{
+}
+#root:hover{
+  border-style: groove;
+}
+
 
 .r-name:hover{
-  color : whitesmoke;
+    border-color : rgba(161, 161, 161,1.0);
   cursor: pointer;
-  border: 4px rgb(66, 66, 66) solid;
-  font-weight: bold;
+    border-style: groove;
 }
 
-.r-name-hidden{
-  display: none;
+.r-name:hover  *{
+    pointer-events: none;
+    border: 4px rgba(161,161,161,1.0) groove; 
 }
 
 
 
 
-@keyframes rootrotating{
+
+
+@keyframes rot0{
   0%{
-    --rotation-z : 0;
+    --rotation-y : 0;
+ /*   --position-y : 0;*/
   }
+
+
   50%{
-    --rotation-z : 3.14;
+    --rotation-y : 3.14;
+ /*   --position-y : 0.5;*/
   }
+
+
 
   100%{
-    --rotation-z : 6.28;
+    --rotation-y : 6.28;
+  /*  --position-y : 0;*/
   }
 }
 
+@keyframes rot1{
+  0%{
+    --rotation-y : 6.28;
+  /*  --position-y : 0;*/
+  }
 
+
+  50%{
+    --rotation-y : 3.14;
+   /* --position-y : 0.5;*/
+  }
+
+
+
+  100%{
+    --rotation-y : 0;
+    /*--position-y : 0;*/
+  }
+}
 

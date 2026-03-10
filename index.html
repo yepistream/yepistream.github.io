@@ -37,35 +37,68 @@
 
         <cell id="root-cell" style="width: 100%; height: 100%; display : inline-block;">
             <mesh  class="pf-object" id="root">
-               <!-- <mesh class="pf-object" id="Thoughts">
-                    <mesh class="pf-object" id="STUB"></mesh>
-                    <mesh class="pf-object" id="TRYING TO THINK"></mesh>
-                    <mesh class="pf-object" id="THIS IS EMPTY"></mesh>
-                    <mesh class="pf-object" id="FORMING THOUGHTS"></mesh>
-                    <mesh class="pf-object" id="THERE IS NOTHING HERE!"></mesh>
-                </mesh>-->
-                <mesh class="pf-object" id="Projects">
-                    <mesh class="pf-object" id="canvasonkanvas">
-                    
-                    </mesh>
-                    <mesh class="pf-object" id="jailedthreejs">
-                        
-                    </mesh>
-                    <mesh class="pf-object" id="sorcherer">
+
+                <mesh class="pf-object" id="Graphical Web Projects">
+                    <mesh class="pf-object" id="Libaries">
+
+                        <mesh class="pf-object" id="Sorcherer">
+                        </mesh>
+
+                        <mesh class="pf-object" id="Canvas On Kanvas">
+                        </mesh> 
 
                     </mesh>
+
+                    <mesh class="pf-object" id="Frameworks">
+                        
+                        <mesh class="pf-object" id="Jailed Three JS">
+                        </mesh> 
+
+                    </mesh>
+
                 </mesh>
-                <mesh class="pf-object" id="introduction">
+
+                <mesh class="pf-object" id="F.A.Q">
+
+                    <mesh class="pf-object CV" id="CV">
+                    </mesh>
+
+                    <mesh class="pf-object CV" id="About Me">
+                    </mesh>
+
+                </mesh>
+
+                <mesh class="pf-object" id="Low-Level Projects">
+
+                  <mesh class="pf-object" id="OpenXR Work">
+
+                        <mesh class="pf-object" id="Monado ARCore">
+                        </mesh>
+
+                        <mesh class="pf-object" id="XR Hub Android">
+                        </mesh>
+
+                        <mesh class="pf-object" id="XR Dekstop">
+                        </mesh>
+
+
+                    </mesh>   
+
                 </mesh>
             </mesh>
-            <perspectivecamera id="cam" render></perspectivecamera>
+            <object3d id="cam-parent">
+                <perspectivecamera id="cam" render></perspectivecamera>
+            </object3d>
         </cell>
         
         <!-- <tag id="object3d-name" class = "object3d-parent-name" ></tag>  -->
         <realm>
-            <div idm="root" autoCenter="false" simulate3D="true" offset="0,0,0">
+            <!--<div idm="cam-parent" autoCenter="true" simulate3D="true" offset="0,0,0" scaleMultiplier="0.4" simulateRotation="true">
+                <h1 id="debug">SHITPICKLE</h1>
+            </div>-->
+            <div idm="root" autoCenter="true" simulate3D="true" offset="0,0,0" scaleMultiplier="0.4">
                 <div id="root" class="r-name">
-                    <h1 id="root">Welcome</h1>
+                    <h1 id="root">Hi!</h1>
                 </div>
             </div>
         </realm>

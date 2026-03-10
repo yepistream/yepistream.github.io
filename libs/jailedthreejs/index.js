@@ -186,6 +186,7 @@ function gatherAssetRules() {
   gatherAssetRules._cacheVersion = styleVersion;
 }
 function getAsset(name, path = null) {
+  if(name[0] == "#") return;
   if (assetMap.size === 0) {
     storeAssetValue("cube", new THREE.BoxGeometry());
     storeAssetValue("sphere", new THREE.SphereGeometry());
@@ -756,13 +757,13 @@ function CSSValueTo3JSValue(value, __object = null) {
     parsed = normalizedValue.replace(/^['"]|['"]$/g, "");
   }
   if (typeof parsed === "string") {
-    console.log(parsed);
+    
     const assetName = parsed;
     if (getAsset(assetName)) {
       return getAsset(assetName);
     }
     switch (parsed[0]) {
-      case "#": {
+      case "@": {
         if (!__object) {
           console.error("CSSValueTo3JSValue: __object is null when resolving", parsed);
           return null;

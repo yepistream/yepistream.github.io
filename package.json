@@ -1,9 +1,7 @@
 {
   "dependencies": {
     "jailedthreejs": "^0.9.5",
+    "live-server": "^1.2.2",
     "sorcherer": "^2.1.1"
-  },
-  "devDependencies": {
-    "vite": "^7.3.1"
   }
 }
