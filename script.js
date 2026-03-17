@@ -127,7 +127,7 @@ const openOnClick = async (e) => {
   const childrenArray = Array.from(cachedSorchererDiv.getElementsByClassName(e.target.id));
   console.log(e.target.id);
 
-  const routePath = `${window.location.href}/pages/${e.target.id.replaceAll(" ", "").toLowerCase()}/index.htm`;
+  const routePath = `${window.location.href}pages/${e.target.id.replaceAll(" ", "").toLowerCase()}/index.htm`;
   const fallbackUrl = `https://github.com/yepistream/${e.target.id.replaceAll(" ", "")}`;
 
   if (childrenArray.length == 0) {
