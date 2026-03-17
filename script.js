@@ -105,7 +105,7 @@ const canGrab = async (url, fallbackUrl) => {
       cache: "no-store"
     });
 
-    window.quickshowOpen(routePath.toLowerCase(), {
+    window.quickshowOpen(url.toLowerCase(), {
         title: e.target.id + ".html",
         resetSize: false,
         size: { w: 65, h: 75 }
