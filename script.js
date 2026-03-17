@@ -143,7 +143,7 @@ const openOnClick = async (e) => {
   const childrenArray = Array.from(cachedSorchererDiv.getElementsByClassName(e.target.id));
   console.log(e.target.id);
 
-  if(e.target.id === "Download CV"){
+  if(e.target.id.toLowerCase().replaceAll(" ","") == "downloadcv"){
     downloadCVStupidity(e);
     return;
   }
