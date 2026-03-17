@@ -98,7 +98,7 @@ function focusOnPlanet(PlanetConvict){
 } 
 
 
-const canGrab = async (url) => {
+const canGrab = async (url, fallbackUrl) => {
   try {
     const res = await fetch(url, {
       method: "GET",
@@ -114,7 +114,7 @@ const canGrab = async (url) => {
     return res.ok;
   } catch (err) {
       console.log("grab failed:", url, err);
-      window.open(`https://github.com/yepistream/${e.target.id.replaceAll(" ", "").toLowerCase()}`, "_blank"); 
+      window.open(fallbackUrl, "_blank"); 
     return false;
   }
 };
@@ -128,10 +128,10 @@ const openOnClick = async (e) => {
   console.log(e.target.id);
 
   const routePath = `./pages/${e.target.id.replaceAll(" ", "").toLowerCase()}/index.htm`;
-  const fallbackUrl = `https://github.com/yepistream/${e.target.id.replaceAll(" ", "").toLowerCase()}`;
+  const fallbackUrl = `https://github.com/yepistream/${e.target.id.replaceAll(" ", "")}`;
 
   if (childrenArray.length == 0) {
-    if (await canGrab(routePath)) {
+    if (await canGrab(routePath.toLowerCase(), fallbackUrl)) {
       
       return;
     }
