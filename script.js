@@ -125,7 +125,7 @@ const canGrab = async (url, fallbackUrl, pageName) => {
 function downloadCVStupidity(butt){
   const CV_PATH = "./docs/cv/Kaza-CV.pdf";
 
-  document.getElementById("cv-download").addEventListener("click", () => {
+  document.getElementById("Download CV").addEventListener("click", () => {
     const a = document.createElement("a");
     a.href = CV_PATH;
     a.download = "Kaza-CV.pdf";
@@ -153,11 +153,10 @@ const openOnClick = async (e) => {
   const fallbackUrl = `https://github.com/yepistream/${e.target.id.replaceAll(" ", "")}`;
 
   if (childrenArray.length == 0) {
-    if (await canGrab(routePath.toLowerCase(), fallbackUrl, e.target.id)) {
-      
+    if (await canGrab(routePath.toLowerCase(), fallbackUrl, e.target.id)) {  
       return;
     }
-
+    window.open(fallbackUrl, "_blank");   
     return;
   }
 
