@@ -106,7 +106,7 @@ const canGrab = async (url, fallbackUrl, pageName) => {
     });
 
     window.quickshowOpen(url.toLowerCase(), {
-        title: e.target.id + ".html",
+        title: pageName + ".html",
         resetSize: false,
         size: { w: 65, h: 75 }
       });
@@ -121,11 +121,33 @@ const canGrab = async (url, fallbackUrl, pageName) => {
 
 
 
+
+function downloadCVStupidity(butt){
+  const CV_PATH = "./docs/cv/Kaza-CV.pdf";
+
+  document.getElementById("cv-download").addEventListener("click", () => {
+    const a = document.createElement("a");
+    a.href = CV_PATH;
+    a.download = "Kaza-CV.pdf";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  });
+}
+
+
+
 const openOnClick = async (e) => {
   if (!cachedSorchererDiv) cachedSorchererDiv = document.getElementsByClassName("sorcherer-container")[0];
 
   const childrenArray = Array.from(cachedSorchererDiv.getElementsByClassName(e.target.id));
   console.log(e.target.id);
+
+  if(e.target.id === "Download CV"){
+    downloadCVStupidity(e);
+    return;
+  }
+
 
   const routePath = `${window.location.href}pages/${e.target.id.replaceAll(" ", "").toLowerCase()}/index.htm`;
   const fallbackUrl = `https://github.com/yepistream/${e.target.id.replaceAll(" ", "")}`;
