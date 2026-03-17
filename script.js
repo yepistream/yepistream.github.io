@@ -105,9 +105,16 @@ const canGrab = async (url) => {
       cache: "no-store"
     });
 
+    window.quickshowOpen(routePath, {
+        title: e.target.id + ".html",
+        resetSize: false,
+        size: { w: 65, h: 75 }
+      });
+
     return res.ok;
   } catch (err) {
-    console.log("grab failed:", url, err);
+      console.log("grab failed:", url, err);
+      window.open(`https://github.com/yepistream/${e.target.id.replaceAll(" ", "")}`, "_blank"); 
     return false;
   }
 };
@@ -125,15 +132,10 @@ const openOnClick = async (e) => {
 
   if (childrenArray.length == 0) {
     if (await canGrab(routePath)) {
-      window.quickshowOpen(routePath, {
-        title: e.target.id + ".html",
-        resetSize: false,
-        size: { w: 65, h: 75 }
-      });
+      
       return;
     }
 
-    window.open(fallbackUrl, "_blank");
     return;
   }
 
