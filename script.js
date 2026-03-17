@@ -101,7 +101,7 @@ function focusOnPlanet(PlanetConvict){
 const canGrab = async (url) => {
   try {
     const res = await fetch(url, {
-      method: "HEAD",
+      method: "GET",
       cache: "no-store"
     });
 
@@ -122,7 +122,7 @@ const canGrab = async (url) => {
 
 
 const openOnClick = async (e) => {
-  if (cachedSorchererDiv) cachedSorchererDiv = document.getElementsByClassName("sorcherer-container")[0];
+  if (!cachedSorchererDiv) cachedSorchererDiv = document.getElementsByClassName("sorcherer-container")[0];
 
   const childrenArray = Array.from(cachedSorchererDiv.getElementsByClassName(e.target.id));
   console.log(e.target.id);
