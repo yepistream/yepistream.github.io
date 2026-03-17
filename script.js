@@ -105,7 +105,7 @@ const canGrab = async (url) => {
       cache: "no-store"
     });
 
-    window.quickshowOpen(routePath, {
+    window.quickshowOpen(routePath.toLowerCase(), {
         title: e.target.id + ".html",
         resetSize: false,
         size: { w: 65, h: 75 }
@@ -114,7 +114,7 @@ const canGrab = async (url) => {
     return res.ok;
   } catch (err) {
       console.log("grab failed:", url, err);
-      window.open(`https://github.com/yepistream/${e.target.id.replaceAll(" ", "")}`, "_blank"); 
+      window.open(`https://github.com/yepistream/${e.target.id.replaceAll(" ", "").toLowerCase()}`, "_blank"); 
     return false;
   }
 };
@@ -127,8 +127,8 @@ const openOnClick = async (e) => {
   const childrenArray = Array.from(cachedSorchererDiv.getElementsByClassName(e.target.id));
   console.log(e.target.id);
 
-  const routePath = `./pages/${e.target.id.replaceAll(" ", "")}/index.htm`;
-  const fallbackUrl = `https://github.com/yepistream/${e.target.id.replaceAll(" ", "")}`;
+  const routePath = `./pages/${e.target.id.replaceAll(" ", "").toLowerCase()}/index.htm`;
+  const fallbackUrl = `https://github.com/yepistream/${e.target.id.replaceAll(" ", "").toLowerCase()}`;
 
   if (childrenArray.length == 0) {
     if (await canGrab(routePath)) {
